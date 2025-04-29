@@ -1,0 +1,42 @@
+
+<div class="bg-gray-100 p-8">
+    <div class=" bg-white shadow-md rounded-lg ">
+        <button (click)="openAddForm()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Employee</button>
+        <table class="w-full text-left border-collapse">
+            <thead>
+                <tr class="bg-blue-600 text-white">
+                    <th class="p-4">ID</th>
+                    <th class="p-4">Name</th>
+                    <th class="p-4">Department</th>
+                    <th class="p-4">Email</th>
+                    <th class="p-4">Phone</th>
+                    <th class="p-4">Address</th>
+                    <th class="p-4">Salary</th>
+                    <th class="p-4">Active</th>
+                    <th class="p-4">Created At</th>
+                    <th class="p-4">Updated At</th>
+                    <th class="p-4">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="hover:bg-gray-50 border-b border-gray-200" *ngFor="let employee of employees">
+                    <td class="p-4 border-b border-gray-200">{{ employee.id }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ employee.name }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ employee.department }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ employee.email }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ employee.phoneNumber }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ employee.address }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ employee.salary }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ employee.active ? 'No' : 'Yes' }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ formatDate(employee.createdAt) }}</td>
+                    <td class="p-4 border-b border-gray-200">{{ formatDate(employee.updatedAt) }}</td>
+                    <td class="p-4 border-b border-gray-200">
+                        <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="editEmployee(employee)">Edit</button>
+                        <button class="bg-red-500 text-white px-4 py-2 rounded" (click)="deleteEmployee(employee.id)">Delete</button>
+                    </td>
+                   
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

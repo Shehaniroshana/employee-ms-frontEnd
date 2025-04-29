@@ -35,7 +35,7 @@ export class SignInPageComponent {
           Swal.fire({
             icon: 'error',
             title: 'Error',
-            text: 'User already exists',
+            text: 'your email is already registered or invalid',
           });
         }
       });
