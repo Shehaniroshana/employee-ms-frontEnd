@@ -1,0 +1,34 @@
+
+<div class="bg-gray-950 flex items-center justify-center min-h-screen">
+    <div class="bg-gray-900 p-8 rounded-xl shadow-2xl w-full max-w-sm border border-gray-800">
+        <div>
+            <h2 class="text-2xl font-semibold mb-6 text-center text-gray-200">Sign in</h2>
+            <div class="mb-5 relative">
+                <label class="block text-gray-400 mb-1 text-sm">Email</label>
+                <i class="bi bi-envelope absolute left-3 top-9 text-gray-500"></i>
+                <input #email class="w-full pl-10 pr-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-gray-200 placeholder-gray-500 focus:outline-none focus:border-blue-600" type="email" placeholder="Enter your email"
+                >
+            </div>
+            <div class="mb-6 relative">
+                <label class="block text-gray-400 mb-1 text-sm">Password</label>
+                <i class="bi bi-lock absolute left-3 top-9 text-gray-500"></i>
+                <input class="w-full pl-10 pr-3 py-2 bg-gray-800 border border-gray-700 rounded-md text-gray-200 placeholder-gray-500 focus:outline-none focus:border-blue-600" type="password" placeholder="********" 
+                #password>
+            </div>
+            <button class="w-full bg-blue-700 text-gray-100 py-2 rounded-md hover:bg-blue-800 transition flex items-center justify-center" 
+            (click)="logIn(email.value,password.value)">
+                <i class="bi bi-box-arrow-in-right mr-2"></i> Login
+            </button>
+            <div class="mt-6 flex justify-center gap-4">
+                <a href="#" class="text-gray-400 hover:text-blue-400"><i class="bi bi-google text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-blue-400"><i class="bi bi-github text-xl"></i></a>
+                <a href="#" class="text-gray-400 hover:text-blue-400"><i class="bi bi-facebook text-xl"></i></a>
+            </div>
+            <p class="mt-4 text-center text-gray-500 text-sm">
+                New employee? <a routerLink="/sing-up" class="text-blue-500 hover:text-blue-400">Register</a>
+            </p>
+        </div>
+
+       
+    </div>
+</div>
