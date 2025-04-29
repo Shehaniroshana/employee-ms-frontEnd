@@ -80,8 +80,10 @@ export class HomePageComponent {
   }
   
   async openAddForm(){
-   await this.addEmployeeForm.openAddForm();
+   const result=await this.addEmployeeForm.openAddForm();
+   if(result){
    await this.getAllEmployee();
+   }
   }
 
   async searchEmployeeByName(name: string) {
@@ -92,18 +94,6 @@ export class HomePageComponent {
     }
   }
 
-/*************  ✨ Windsurf Command ⭐  *************/
-/**
- * Exports the list of employees to a CSV file.
- * If there are no employees, an informational alert is displayed.
- * The CSV includes headers such as ID, Name, Email, Phone Number, Address,
- * Department, Salary, Active status, and Date. Each employee's details
- * are converted to a CSV row, with special formatting for certain fields
- * (e.g., phone numbers and dates). The resulting CSV file is automatically
- * downloaded via a temporary link.
- */
-
-/*******  301641d4-552d-45b9-a5be-653e80e42643  *******/
   exportToCSV() {
     if (!this.employees || this.employees.length === 0) {
       Swal.fire('No data', 'There are no employees to export.', 'info');

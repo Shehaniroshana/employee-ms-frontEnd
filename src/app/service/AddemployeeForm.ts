@@ -5,8 +5,8 @@ export class AddEmployeeForm {
 
   employeeService = new EmployeeService();
 
-  openAddForm() {
-    Swal.fire({
+  async openAddForm(): Promise<boolean> {
+    return Swal.fire({
       title: 'Add New Employee',
       html: `
         <input id="name" class="swal2-input" placeholder="Name">
@@ -43,10 +43,13 @@ export class AddEmployeeForm {
         const success = await this.employeeService.addEmployee(result.value);
         if (success) {
           Swal.fire('Success', 'Employee added successfully!', 'success');
+          return true;
         } else {
           Swal.fire('Error', 'Failed to add employee.', 'error');
+          return false;
         }
       }
+      return false;
     });
   }
 }
