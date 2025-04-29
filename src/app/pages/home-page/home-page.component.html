@@ -1,42 +1,80 @@
-
-<div class="bg-gray-100 p-8">
-    <div class=" bg-white shadow-md rounded-lg ">
-        <button (click)="openAddForm()" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Add Employee</button>
-        <table class="w-full text-left border-collapse">
-            <thead>
-                <tr class="bg-blue-600 text-white">
-                    <th class="p-4">ID</th>
-                    <th class="p-4">Name</th>
-                    <th class="p-4">Department</th>
-                    <th class="p-4">Email</th>
-                    <th class="p-4">Phone</th>
-                    <th class="p-4">Address</th>
-                    <th class="p-4">Salary</th>
-                    <th class="p-4">Active</th>
-                    <th class="p-4">Created At</th>
-                    <th class="p-4">Updated At</th>
-                    <th class="p-4">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="hover:bg-gray-50 border-b border-gray-200" *ngFor="let employee of employees">
-                    <td class="p-4 border-b border-gray-200">{{ employee.id }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ employee.name }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ employee.department }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ employee.email }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ employee.phoneNumber }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ employee.address }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ employee.salary }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ employee.active ? 'No' : 'Yes' }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ formatDate(employee.createdAt) }}</td>
-                    <td class="p-4 border-b border-gray-200">{{ formatDate(employee.updatedAt) }}</td>
-                    <td class="p-4 border-b border-gray-200">
-                        <button class="bg-blue-500 text-white px-4 py-2 rounded" (click)="editEmployee(employee)">Edit</button>
-                        <button class="bg-red-500 text-white px-4 py-2 rounded" (click)="deleteEmployee(employee.id)">Delete</button>
-                    </td>
-                   
-                </tr>
-            </tbody>
-        </table>
+<div class="w-full h-full h-screen bg-gray-950 flex items-center justify-center">
+    <div class="bg-gray-900 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-8">
+            <h1 class="text-3xl font-extrabold text-gray-100 mb-2">Employee Management System</h1>
+            <h2 class="text-xl font-semibold text-gray-300 mb-8">Fortium Partners</h2>
+            <div class="flex justify-between items-center mb-8">
+                <div class="relative w-1/3">
+                    <input 
+                        type="text" 
+                        #serchInput
+                        placeholder="Search by name..." 
+                        class="w-full pl-12 pr-4 py-3 rounded-xl bg-gray-800 border border-gray-700 text-gray-200 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition duration-300"
+                        (input)="searchEmployeeByName(serchInput.value)"
+                    />
+                    <button (click)="searchEmployeeByName(serchInput.value)">
+                        <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>   
+                    </button>
+                </div>
+                <div class="flex space-x-4">
+                    <button 
+                        (click)="exportToCSV()"  
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 ease-in-out">
+                        Get Report
+                    </button>
+                    <button 
+                        (click)="openAddForm()" 
+                        class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-6 rounded-xl transition duration-300 ease-in-out">
+                        Add Employee
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                    <thead>
+                        <tr class="bg-gray-800 text-gray-200">
+                            <th class="p-4 font-semibold rounded-tl-xl">ID</th>
+                            <th class="p-4 font-semibold">Name</th>
+                            <th class="p-4 font-semibold">Department</th>
+                            <th class="p-4 font-semibold">Email</th>
+                            <th class="p-4 font-semibold">Phone</th>
+                            <th class="p-4 font-semibold">Address</th>
+                            <th class="p-4 font-semibold">Salary</th>
+                            <th class="p-4 font-semibold">Active</th>
+                            <th class="p-4 font-semibold">Created At</th>
+                            <th class="p-4 font-semibold">Updated At</th>
+                            <th class="p-4 font-semibold rounded-tr-xl">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-800 transition duration-200 ease-in-out" *ngFor="let employee of employees">
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ employee.id }}</td>
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ employee.name }}</td>
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ employee.department }}</td>
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ employee.email }}</td>
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ employee.phoneNumber }}</td>
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ employee.address }}</td>
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ employee.salary | currency }}</td>
+                            <td class="p-4 border-t border-gray-700">
+                                <span class="inline-block px-3 py-1 rounded-full text-sm font-medium"
+                                    [ngClass]="{'bg-green-900 text-green-300': employee.active, 'bg-red-900 text-red-300': !employee.active}">
+                                    {{ employee.active ? 'Yes' : 'No' }}
+                                </span>
+                            </td>
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ formatDate(employee.createdAt) }}</td>
+                            <td class="p-4 border-t border-gray-700 text-gray-300">{{ formatDate(employee.updatedAt) }}</td>
+                            <td class="p-4 border-t border-gray-700 flex space-x-3">
+                                <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-xl transition duration-300"
+                                    (click)="editEmployee(employee)">Edit</button>
+                                <button class="bg-red-800 hover:bg-red-900 text-white px-4 py-2 rounded-xl transition duration-300"
+                                    (click)="deleteEmployee(employee.id)">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

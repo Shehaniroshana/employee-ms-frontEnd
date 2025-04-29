@@ -4,10 +4,11 @@ import { CommonModule } from '@angular/common';
 import { UpdateEmployeeForm } from '../../service/UpdateEmployeeForm';
 import Swal from 'sweetalert2';
 import { AddEmployeeForm } from '../../service/AddemployeeForm';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home-page',
-  imports: [CommonModule],
+  imports: [CommonModule,FormsModule],
   templateUrl: './home-page.component.html',
   styleUrl: './home-page.component.css'
 })
@@ -82,4 +83,77 @@ export class HomePageComponent {
    await this.addEmployeeForm.openAddForm();
    await this.getAllEmployee();
   }
+
+  async searchEmployeeByName(name: string) {
+    if (name!=='') {
+      this.employees = await this.employeeService.searchEmployeeByName(name);
+    } else {
+      this.getAllEmployee();
+    }
+  }
+
+/*************  ✨ Windsurf Command ⭐  *************/
+/**
+ * Exports the list of employees to a CSV file.
+ * If there are no employees, an informational alert is displayed.
+ * The CSV includes headers such as ID, Name, Email, Phone Number, Address,
+ * Department, Salary, Active status, and Date. Each employee's details
+ * are converted to a CSV row, with special formatting for certain fields
+ * (e.g., phone numbers and dates). The resulting CSV file is automatically
+ * downloaded via a temporary link.
+ */
+
+/*******  301641d4-552d-45b9-a5be-653e80e42643  *******/
+  exportToCSV() {
+    if (!this.employees || this.employees.length === 0) {
+      Swal.fire('No data', 'There are no employees to export.', 'info');
+      return;
+    }
+  
+    const header = [
+      'ID',
+      'Name',
+      'Email',
+      'Phone Number',
+      'Address',
+      'Department',
+      'Salary',
+      'Active',
+      'Date'
+    ];
+  
+    const csvContent = [
+      header.join(','),
+      ...this.employees.map(emp => {
+        const dateObj = new Date(emp.createdAt || emp.date || '');
+        const formattedDate = `${dateObj.getFullYear()}-${(dateObj.getMonth() + 1).toString().padStart(2, '0')}-${dateObj.getDate().toString().padStart(2, '0')}`;
+  
+        const row = [
+          emp.id,
+          `"${emp.name}"`,
+          `"${emp.email}"`,
+          `"\t${emp.phoneNumber}"`, // prevents scientific notation
+          `"${emp.address}"`,
+          emp.department,
+          emp.salary,
+          emp.active ? 'Yes' : 'No',
+          `"${formattedDate}"` // date as readable string
+        ];
+  
+        return row.join(',');
+      })
+    ].join('\n');
+  
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const link = document.createElement('a');
+    const url = URL.createObjectURL(blob);
+    link.setAttribute('href', url);
+    link.setAttribute('download', 'employees.csv');
+    link.style.visibility = 'hidden';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+  
+  
 }

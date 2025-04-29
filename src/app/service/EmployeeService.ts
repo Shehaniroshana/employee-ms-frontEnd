@@ -49,5 +49,10 @@ export class EmployeeService {
         }
       }
       
-    
+    async searchEmployeeByName(name: string): Promise<any> {
+        const data=await fetch(`http://localhost:8080/api/employees/name/${name}`).then((response) => {
+            return response.json();
+        });
+        return data;
+    }
 }
